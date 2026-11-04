@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Аудит общепита — находим деньги и риски до того, как их найдёт налоговая</title>
+<style>
+:root{--bg:#0f1115;--card:#171b22;--line:#2a3040;--txt:#e8ecf4;--mut:#9aa4b5;--acc:#f5a623;--acc2:#4da3ff;--red:#ff4d5e;--ok:#3ecf8e}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--txt);font-family:'Segoe UI',Arial,sans-serif;line-height:1.6}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+section{padding:64px 0}
+h1{font-size:clamp(28px,4.5vw,44px);line-height:1.2;font-weight:800}
+h2{font-size:clamp(22px,3vw,32px);font-weight:800;margin-bottom:12px}
+p.sub{color:var(--mut);font-size:17px;max-width:640px}
+.hero{padding:90px 0 70px;background:radial-gradient(1200px 500px at 20% -10%,rgba(245,166,35,.12),transparent),radial-gradient(900px 400px at 90% 0%,rgba(77,163,255,.10),transparent)}
+.btn{display:inline-block;padding:14px 26px;border-radius:10px;font-size:16px;font-weight:700;text-decoration:none;cursor:pointer;border:0;transition:.15s}
+.btn-acc{background:var(--acc);color:#1a1a1a}
+.btn-acc:hover{filter:brightness(1.1)}
+.btn-out{background:transparent;color:var(--txt);border:1px solid var(--line)}
+.btn-out:hover{border-color:var(--acc)}
+.btn-wa{background:#25d366;color:#0b2e18}
+.btn-tg{background:#2aabee;color:#04203a}
+.btn-row{display:flex;gap:14px;flex-wrap:wrap;margin-top:28px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px}
+.card h3{font-size:18px;margin-bottom:8px}
+.card p{color:var(--mut);font-size:15px}
+.card .ic{font-size:26px;margin-bottom:10px}
+.dark{background:#0a0c10}
+.risk{border:1px solid rgba(255,77,94,.45);background:linear-gradient(180deg,rgba(255,77,94,.10),rgba(255,77,94,.03));border-radius:14px;padding:24px}
+.risk h3{color:var(--red);font-size:19px;margin-bottom:8px}
+.risk p{color:var(--mut);font-size:15px}
+.badge{display:inline-block;background:rgba(255,77,94,.15);color:var(--red);border:1px solid rgba(255,77,94,.4);border-radius:20px;padding:3px 12px;font-size:12px;font-weight:700;margin-bottom:12px;letter-spacing:.5px}
+.calc .card{margin-bottom:18px}
+label.opt{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px dashed var(--line);cursor:pointer}
+label.opt:last-child{border-bottom:0}
+.opt input{margin-top:5px;accent-color:var(--acc);width:17px;height:17px;flex:none}
+.opt .t b{display:block;font-size:15px}
+.opt .t span{color:var(--mut);font-size:13px}
+.opt .p{margin-left:auto;color:var(--acc);font-weight:700;font-size:14px;white-space:nowrap}
+.radios{display:flex;gap:10px;flex-wrap:wrap}
+.chip{padding:9px 16px;border:1px solid var(--line);border-radius:10px;cursor:pointer;font-size:14px;user-select:none}
+.chip input{display:none}
+.chip.on{border-color:var(--acc);color:var(--acc);font-weight:700}
+.tarif .t span{color:var(--mut)}
+.total{background:linear-gradient(180deg,rgba(245,166,35,.10),rgba(245,166,35,.03));border:1px solid rgba(245,166,35,.4);border-radius:14px;padding:22px;font-size:18px}
+.total .big{font-size:32px;font-weight:800;color:var(--acc)}
+.total .det{color:var(--mut);font-size:13px;white-space:pre-line;margin-top:8px}
+.total .note{color:var(--mut);font-size:12px;margin-top:10px}
+input,textarea{width:100%;background:#0d1016;border:1px solid var(--line);border-radius:10px;color:var(--txt);padding:12px 14px;font-size:15px;margin:6px 0 14px}
+input:focus,textarea:focus{outline:0;border-color:var(--acc)}
+textarea{min-height:90px;resize:vertical}
+#outMsg{background:#0d1016;border:1px solid var(--line);border-radius:10px;padding:14px;white-space:pre-wrap;font-size:14px;color:var(--mut);margin-bottom:14px;display:none}
+.contacts a{color:var(--acc);text-decoration:none}
+.contacts a:hover{text-decoration:underline}
+footer{border-top:1px solid var(--line);padding:36px 0;color:var(--mut);font-size:14px}
+footer .req{font-size:13px;white-space:pre-line;margin-top:12px}
+footer a{color:var(--acc2);text-decoration:none}
+@media(max-width:600px){section{padding:44px 0}.hero{padding:60px 0 46px}}
+</style>
+</head>
+<body>
+
+<header class="hero"><div class="wrap">
+  <h1>Аудит общепита: находим деньги и риски до&nbsp;того, как их найдёт налоговая</h1>
+  <p class="sub" style="margin-top:16px">Экспресс-аудит кассы, первички, кадров и маркировки. Восстановление учёта в 1С. Бухгалтерия под ключ для ресторанов, кафе и сетей — от ИП Лупина А. Н.</p>
+  <div class="btn-row">
+    <a class="btn btn-acc" href="#calc">Рассчитать стоимость</a>
+    <a class="btn btn-out" href="#lead">Запросить аудит</a>
+  </div>
+</div></header>
+
+<section id="check"><div class="wrap">
+  <h2>Что проверяем</h2>
+  <p class="sub" style="margin-bottom:26px">Шесть направлений, где общепит теряет деньги и попадает под штрафы.</p>
+  <div class="grid">
+    <div class="card"><div class="ic">🧾</div><h3>Касса и онлайн-чека</h3><p>Соответствие 54-ФЗ, корректность фискальных признаков, раздельный учёт алкоголя и кухни.</p></div>
+    <div class="card"><div class="ic">📄</div><h3>Первичка</h3><p>Акты, накладные, ТТК, УПД — полнота и оформление. Хаос в первичке = недоимки и доначисления.</p></div>
+    <div class="card"><div class="ic">🚚</div><h3>Поставщики и агрегаторы</h3><p>Договоры с Деливери-агрегаторами, взаиморасчёты, комиссии, НДС в цепочке.</p></div>
+    <div class="card"><div class="ic">🛡️</div><h3>Страхование — ст. 964 ГК РФ</h3><p>Уязвимость выплат при отсутствии уведомлений и документов. Критический риск для бенефициара.</p></div>
+    <div class="card"><div class="ic">👥</div><h3>Персонал и медкнижки</h3><p>Трудовые договоры, графики, медкнижки, иностранцы: патенты и уведомления МВД.</p></div>
+    <div class="card"><div class="ic">⚖️</div><h3>Налоговые риски</h3><p>Режим налогообложения, долги, требования ИФНС, блокировки счетов, ЕГАИС и Честный знак.</p></div>
+  </div>
+</div></section>
+
+<section class="dark"><div class="wrap">
+  <h2>Критические риски</h2>
+  <p class="sub" style="margin-bottom:26px">Два сценария, после которых спасать бизнес уже дороже, чем проверять заранее.</p>
+  <div class="grid">
+    <div class="risk"><span class="badge">КРИТИЧЕСКИЙ РИСК</span><h3>Ст. 964 ГК РФ: 100% отказ в выплатах</h3><p>Несвоевременное уведомление страховщика и утрата документов страхового случая — законный повод для полного отказа в выплате. Ответственность ложится на бенефициара вплоть до субсидиарной.</p></div>
+    <div class="risk"><span class="badge">КРИТИЧЕСКИЙ РИСК</span><h3>Хаос в первичке</h3><p>Отсутствие актов и накладных, дубли в 1С, «серые» поставщики. При проверке это превращается в доначисления, штрафы и блокировку счетов — и в отказ по страховым выплатам по той же причине.</p></div>
+  </div>
+</div></section>
+
+<section id="calc" class="calc"><div class="wrap">
+  <h2>Калькулятор стоимости</h2>
+  <p class="sub" style="margin-bottom:26px">Отметьте нужное — итог пересчитается сразу.</p>
+
+  <div class="card">
+    <h3>1. Восстановление учёта при долгах</h3>
+    <div class="radios" id="debt" style="margin-top:12px">
+      <label class="chip"><input type="radio" name="debt" value="0" checked>Долгов нет</label>
+      <label class="chip"><input type="radio" name="debt" value="150000">Долги до 150 000 ₽</label>
+      <label class="chip"><input type="radio" name="debt" value="250000">Долги до 250 000 ₽</label>
+      <label class="chip"><input type="radio" name="debt" value="400000">Долги до 400 000 ₽</label>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>2. Разовые работы</h3>
+    <label class="opt"><input type="checkbox" id="oneC"><span class="t"><b>Восстановление 1С по сегментам</b><span>полный разбор и пересборка учёта</span></span><span class="p">105 000 ₽ × сегмент</span></label>
+    <label class="opt"><input type="checkbox" id="audit"><span class="t"><b>Экспресс-аудит</b><span>касса, первичка, кадры, налоговые риски — отчёт с планом действий</span></span><span class="p">60 000 ₽</span></label>
+    <div id="segWrap" style="display:none;margin-top:8px">
+      <label style="font-size:14px;color:var(--mut)">Сегментов учёта (кухня, бар, зал, доставка…): <b id="segVal">1</b></label>
+      <input type="range" id="seg" min="1" max="10" value="1" style="width:100%">
+    </div>
+  </div>
+
+  <div class="card tarif">
+    <h3>3. Обслуживание — выберите тариф (за месяц)</h3>
+    <div class="radios" id="tarif" style="margin-top:12px">
+      <label class="chip"><input type="radio" name="tarif" value="0" checked>Без обслуживания</label>
+      <label class="chip"><input type="radio" name="tarif" value="45000">Базовый — 45 000 ₽</label>
+      <label class="chip"><input type="radio" name="tarif" value="60000">Стандарт — 60 000 ₽</label>
+      <label class="chip"><input type="radio" name="tarif" value="90000">Антикризис — от 90 000 ₽</label>
+    </div>
+    <div class="t" id="tarifDesc" style="margin-top:14px;font-size:14px;color:var(--mut)"></div>
+    <div style="margin-top:14px">
+      <label style="font-size:14px;color:var(--mut)">Срок обслуживания:</label>
+      <div class="radios" id="months" style="margin-top:8px">
+        <label class="chip"><input type="radio" name="mo" value="3" checked>3 мес</label>
+        <label class="chip"><input type="radio" name="mo" value="6">6 мес</label>
+        <label class="chip"><input type="radio" name="mo" value="12">12 мес</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>4. Бухгалтерия и учёт общепита (за месяц)</h3>
+    <label class="opt"><input type="checkbox" class="acct" data-p="12000"><span class="t"><b>Кадровый учёт общепита</b><span>приём/увольнение, графики, медкнижки</span></span><span class="p">12 000 ₽/мес</span></label>
+    <label class="opt"><input type="checkbox" class="acct" data-p="18000"><span class="t"><b>Налоги</b><span>УСН/патент, декларации, взносы за сотрудников</span></span><span class="p">18 000 ₽/мес</span></label>
+    <label class="opt"><input type="checkbox" class="acct" data-p="4000"><span class="t"><b>Воинский учёт</b><span>картотека, отчёты в военкомат, актуализация</span></span><span class="p">4 000 ₽/мес</span></label>
+    <label class="opt"><input type="checkbox" class="acct" data-p="8000"><span class="t"><b>Работа с иностранцами</b><span>патенты, уведомления МВД, чеки</span></span><span class="p">8 000 ₽/мес</span></label>
+    <label class="opt"><input type="checkbox" class="acct" data-p="3000"><span class="t"><b>Меркурий</b><span>ветеринарные сертификаты, гашение ВСД</span></span><span class="p">3 000 ₽/мес</span></label>
+    <label class="opt"><input type="checkbox" class="acct" data-p="5000"><span class="t"><b>ЕГАИС</b><span>алкогольный журнал, декларации, ТТК</span></span><span class="p">5 000 ₽/мес</span></label>
+    <label class="opt"><input type="checkbox" class="acct" data-p="5000"><span class="t"><b>Честный знак</b><span>маркировка молочки/воды, ввод в оборот</span></span><span class="p">5 000 ₽/мес</span></label>
+  </div>
+
+  <div class="card">
+    <label class="opt" style="border:0"><input type="checkbox" id="chain"><span class="t"><b>Сеть (2 и более точек)</b><span>коэффициент ×1,5 к стоимости</span></span><span class="p">×1,5</span></label>
+  </div>
+
+  <div class="total">
+    Итог: <span class="big" id="sum">0 ₽</span>
+    <div class="det" id="det"></div>
+    <div class="note" id="note"></div>
+    <div class="btn-row">
+      <a class="btn btn-acc" href="#lead" id="toLead">Запросить аудит с этим расчётом</a>
+    </div>
+  </div>
+</div></section>
+
+<section id="lead"><div class="wrap">
+  <h2>Запросить аудит</h2>
+  <p class="sub" style="margin-bottom:26px">Оставьте заявку — ответим в мессенджере или по телефону в течение рабочего дня.</p>
+  <div class="grid" style="grid-template-columns:1fr 1fr;align-items:start">
+    <div class="card">
+      <label>Ваше имя</label><input id="fName" placeholder="Иван">
+      <label>Телефон</label><input id="fPhone" placeholder="+7 ___ ___-__-__">
+      <label>Комментарий</label><textarea id="fNote" placeholder="Сеть кафе, долги, 1С…"></textarea>
+      <button class="btn btn-acc" id="genBtn" style="width:100%">Сформировать заявку</button>
+      <div id="outMsg"></div>
+      <div class="btn-row">
+        <button class="btn btn-out" id="copyBtn" style="display:none">Скопировать</button>
+        <a class="btn btn-wa" id="waBtn" style="display:none" target="_blank">Написать в WhatsApp</a>
+        <a class="btn btn-tg" id="tgBtn" style="display:none" target="_blank">Написать в Telegram</a>
+      </div>
+    </div>
+    <div class="card contacts">
+      <h3>Контакты</h3>
+      <p style="margin-top:10px">📞 Телефон / WhatsApp: <a href="tel:+79102896339">+7 910 289-63-39</a></p>
+      <p style="margin-top:10px">✈️ Telegram: <a href="https://t.me/LudaLA231079" target="_blank">@LudaLA231079</a></p>
+      <p style="margin-top:10px">✉️ Почта: <a href="mailto:buh.vrn-2017@yandex.ru">buh.vrn-2017@yandex.ru</a></p>
+      <p style="margin-top:18px;color:var(--mut);font-size:14px">Работаем по Воронежу и области, онлайн — по всей России.</p>
+    </div>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <b style="color:var(--txt)">Исполнитель: ИП Лупин Александр Николаевич</b>
+  <div class="req">ИНН 361916156830
+Расчётный счёт: 40802810120000831171
+Банк: ООО «Банк Точка», БИК 044525104, к/с 30101810745374525104</div>
+  <p style="margin-top:14px">📞 <a href="tel:+79102896339">+7 910 289-63-39</a> · ✈️ <a href="https://t.me/LudaLA231079" target="_blank">Telegram</a> · ✉️ <a href="mailto:buh.vrn-2017@yandex.ru">buh.vrn-2017@yandex.ru</a></p>
+</div></footer>
+
+<script>
+const TARIF_DESC = {
+  '45000': '«Базовый»: учёт по УСН/патенту, декларации и взносы, кадровый минимум, НДФЛ и отчётность в ИФНС/СФР в срок, консультации до 2 вопросов в месяц.',
+  '60000': '«Стандарт»: всё из «Базового» + кадры с медкнижками, иностранцы (патенты, МВД), воинский учёт, Меркурий, помощь при сверках и ответах на требования.',
+  '90000': '«Антикризис»: всё из «Стандарта» + ЕГАИС и Честный знак под ключ, восстановление учёта после блокировок, защита при проверках, контроль дебиторки и договоров, квартальный аудит по ст. 964 и первичке, срочные консультации без лимита.'
+};
+const fmt = n => n.toLocaleString('ru-RU') + ' ₽';
+function calc(){
+  document.querySelectorAll('#calc .chip').forEach(ch=>{
+    const inp = ch.querySelector('input');
+    ch.classList.toggle('on', inp.checked);
+  });
+  const debt = +document.querySelector('input[name="debt"]:checked').value;
+  const oneC = document.getElementById('oneC').checked;
+  const audit = document.getElementById('audit').checked;
+  const segs = oneC ? +document.getElementById('seg').value : 0;
+  document.getElementById('segWrap').style.display = oneC ? 'block' : 'none';
+  document.getElementById('segVal').textContent = segs || 1;
+  const tar = +document.querySelector('input[name="tarif"]:checked').value;
+  document.getElementById('tarifDesc').textContent = TARIF_DESC[tar] || 'Услуги берутся разово или списком из блока ниже.';
+  const mo = +document.querySelector('input[name="mo"]:checked').value;
+  let acct = 0; const acctList = [];
+  document.querySelectorAll('.acct:checked').forEach(cb=>{acct += +cb.dataset.p; acctList.push(cb.closest('.opt').querySelector('b').textContent);});
+  const chain = document.getElementById('chain').checked;
+  let oneShot = debt + segs*105000 + audit;
+  let monthly = (tar + acct) * mo;
+  const pack = oneC && audit;
+  let sum = oneShot + monthly;
+  const det = [];
+  if(debt) det.push('Восстановление при долгах: ' + fmt(debt));
+  if(segs) det.push('Восстановление 1С: ' + segs + ' × 105 000 = ' + fmt(segs*105000));
+  if(audit) det.push('Экспресс-аудит: 60 000 ₽');
+  if(tar) det.push('Обслуживание: ' + fmt(tar) + ' × ' + mo + ' мес = ' + fmt(tar*mo));
+  if(acct) det.push('Бухгалтерия общепита: ' + fmt(acct) + '/мес × ' + mo + ' мес = ' + fmt(acct*mo));
+  let note = '';
+  if(chain){ const k = sum*0.5; sum = sum*1.5; note = 'Коэффициент сети ×1,5: +' + fmt(k); }
+  let disc = 0;
+  if(pack){ disc = oneShot*0.1; sum -= disc; note += (note?'; ':'') + 'Скидка за пакет «аудит + восстановление» −10%: −' + fmt(disc); }
+  document.getElementById('sum').textContent = fmt(Math.round(sum));
+  document.getElementById('det').textContent = det.join('\n');
+  document.getElementById('note').textContent = note || (sum ? 'Итог за период расчёта. Точную смету утвердим после экспресс-диагностики.' : '');
+}
+document.querySelectorAll('#calc input').forEach(i=>{
+  i.addEventListener('change', ()=>{ calc(); fillLead(); });
+});
+document.getElementById('seg').addEventListener('input', ()=>{ calc(); });
+const tarChip = document.querySelectorAll('#tarif .chip, #months .chip, #debt .chip');
+document.querySelectorAll('.radios input').forEach(r=>r.addEventListener('change', calc));
+function collect(){
+  const debt = document.querySelector('input[name="debt"]:checked').value;
+  const oneC = document.getElementById('oneC').checked;
+  const audit = document.getElementById('audit').checked;
+  const segs = oneC ? +document.getElementById('seg').value : 0;
+  const tarEl = document.querySelector('input[name="tarif"]:checked');
+  const tar = +tarEl.value;
+  const tarName = {0:'',45000:'Базовый',60000:'Стандарт',90000:'Антикризис'}[tar];
+  const mo = +document.querySelector('input[name="mo"]:checked').value;
+  const acctList = [];
+  let acct = 0;
+  document.querySelectorAll('.acct:checked').forEach(cb=>{acct += +cb.dataset.p; acctList.push(cb.closest('.opt').querySelector('b').textContent + ' — ' + fmt(+cb.dataset.p) + '/мес');});
+  const chain = document.getElementById('chain').checked;
+  const pack = oneC && audit;
+  return {debt:+debt, oneC, segs, audit, tar, tarName, mo, acct, acctList, chain, pack};
+}
+let leadText = '';
+function fillLead(){
+  const c = collect();
+  if(!c.debt && !c.oneC && !c.audit && !c.tar && !c.acct){ leadText=''; return; }
+  let lines = ['Здравствуйте! Запрос на аудит общепита.'];
+  if(c.debt) lines.push('Долги: до ' + fmt(c.debt));
+  if(c.segs) lines.push('Восстановление 1С: ' + c.segs + ' сегм. × 105 000 ₽ = ' + fmt(c.segs*105000));
+  if(c.audit) lines.push('Экспресс-аудит: 60 000 ₽');
+  if(c.tar) lines.push('Обслуживание «' + c.tarName + '»: ' + fmt(c.tar) + '/мес × ' + c.mo + ' мес = ' + fmt(c.tar*c.mo));
+  if(c.acctList.length){ lines.push('Бухгалтерия общепита:'); c.acctList.forEach(l=>lines.push('  • ' + l)); lines.push('Итого бухгалтерия: ' + fmt(c.acct) + '/мес × ' + c.mo + ' мес = ' + fmt(c.acct*c.mo)); }
+  if(c.chain) lines.push('Сеть (2+ точки): ×1,5');
+  if(c.pack) lines.push('Пакет «аудит + восстановление»: скидка −10%');
+  lines.push('Ориентировочный итог: ' + document.getElementById('sum').textContent);
+  leadText = lines.join('\n');
+}
+document.getElementById('genBtn').addEventListener('click', ()=>{
+  const name = document.getElementById('fName').value.trim() || '—';
+  const phone = document.getElementById('fPhone').value.trim() || '—';
+  const note = document.getElementById('fNote').value.trim();
+  fillLead();
+  let t = 'Имя: ' + name + '\nТелефон: ' + phone + '\n\n' + (leadText || 'Заявка на аудит общепита.');
+  if(note) t += '\nКомментарий: ' + note;
+  const out = document.getElementById('outMsg');
+  out.style.display = 'block';
+  out.textContent = t;
+  ['copyBtn','waBtn','tgBtn'].forEach(id=>document.getElementById(id).style.display='inline-block');
+  document.getElementById('waBtn').href = 'https://wa.me/79102896339?text=' + encodeURIComponent(t);
+  document.getElementById('tgBtn').href = 'https://t.me/LudaLA231079';
+});
+document.getElementById('copyBtn').addEventListener('click', function(){
+  navigator.clipboard.writeText(document.getElementById('outMsg').textContent).then(()=>{ this.textContent='Скопировано ✓'; setTimeout(()=>this.textContent='Скопировать',1800); });
+});
+calc();
+</script>
+</body>
+</html>
